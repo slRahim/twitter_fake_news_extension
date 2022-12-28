@@ -35,14 +35,14 @@ function tweet_text(page) {
                 button.setAttribute("id", "btn_fk_" + tweet_id)
                 button.setAttribute("type", "button")
                 button.addEventListener("click", function () {
-                    console.log(list_articles[list_ids.indexOf(tweet_id)].tweet_text)
+                    console.log(list_articles[list_ids.indexOf(tweet_id)].tweet_text);
                 }, false)
                 document.getElementById(tweet_id).appendChild(button)
             }
 
         }
-        sendTweet(list_articles);
-        last_index = list_articles.length - 1;
+        // sendTweet(list_articles);
+        // last_index = list_articles.length - 1;
 
         // part 2 scroll event
         page.onscroll = function () {
@@ -70,8 +70,8 @@ function tweet_text(page) {
                         document.getElementById(tweet_id).appendChild(button)
                     }
                 }
-                sendTweet(list_articles.slice(last_index+1)); 
-                last_index = list_articles.length-1 ;
+                // sendTweet(list_articles.slice(last_index+1)); 
+                // last_index = list_articles.length-1 ;
 
             }
             page.oldScroll = page.scrollY;
