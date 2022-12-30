@@ -1,1 +1,1 @@
-# twitter_fake_news_extension
+# Twitter fake news extension

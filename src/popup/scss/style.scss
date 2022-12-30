@@ -5,3 +5,28 @@
 	width: 400px;
 	color: #314d3e;
 }
+
+.btn_detect {
+	top : 0px;
+    right : 30px;
+    position : absolute;
+    width : 70px;
+    height : 28px;
+    font-weight : 700;
+    border : 0px;
+    border-radius : 30px;
+    background-color : #1D9CF085;
+    color : #ffffff85;
+}
+
+.btn_active {
+	background-color : #1D9BF0;
+    color : #ffffff;
+    cursor : pointer;
+}
+
+.btn_inactive {
+	background-color : #1D9BF085;
+    color : #ffffff85;
+    cursor : context-menu;
+}
