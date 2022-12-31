@@ -21,15 +21,17 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             document.getElementById('id_co_detection').innerHTML = result.detected
         }
-
     });
 
     getCurrentTabUrl(function (url) {
         document.getElementById("current_url_id").innerHTML = url;
         if (url !== "twitter.com") {
-            document.getElementById('flexSwitchCheckChecked').checked = false
+            document.getElementById('emoji_status_id').innerHTML = "&#128564;"
+            document.getElementById('current_url_desc_id').innerHTML = "This extension work only on twitter"
+
         } else {
-            document.getElementById('flexSwitchCheckChecked').checked = true
+            document.getElementById('emoji_status_id').innerHTML = "&#129488;"
+            document.getElementById('current_url_desc_id').innerHTML = "Your extension is enabled"
         }
     });
 });

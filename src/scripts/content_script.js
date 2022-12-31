@@ -28,7 +28,12 @@ function tweet_text(page) {
             let a;
             if (!list_ids.includes(tweet_id)) {
                 list_ids.push(tweet_id);
-                a = new Article(tweet_id, document.getElementById(tweet_id).firstChild.innerText, '', 0, 0, 0)
+                a = new Article(tweet_id, 
+                    document.getElementById(tweet_id).firstChild.innerText, 
+                    articles[i].querySelector('[data-testid="User-Names"]').innerText, 
+                    articles[i].querySelector('[data-testid="app-text-transition-container"]>span').innerText,
+                    articles[i].querySelector('[data-testid="reply"]>div').innerText,
+                    articles[i].querySelector('[data-testid="retweet"]>div').innerText)
                 list_articles.push(a);
                 let button = document.createElement("Button");
                 button.innerHTML = "TEST";
@@ -42,8 +47,8 @@ function tweet_text(page) {
             }
 
         }
-        // sendTweet(list_articles);
-        // last_index = list_articles.length - 1;
+        sendTweet(list_articles);
+        last_index = list_articles.length - 1;
 
         // part 2 scroll event
         page.onscroll = function () {
@@ -58,7 +63,12 @@ function tweet_text(page) {
                     let a;
                     if (!list_ids.includes(tweet_id)) {
                         list_ids.push(tweet_id);
-                        a = new Article(tweet_id, document.getElementById(tweet_id).firstChild.innerText, '', 0, 0, 0)
+                        a = new Article(tweet_id, 
+                            document.getElementById(tweet_id).firstChild.innerText, 
+                            articles[i].querySelector('[data-testid="User-Names"]').innerText, 
+                            articles[i].querySelector('[data-testid="app-text-transition-container"]>span').innerText,
+                            articles[i].querySelector('[data-testid="reply"]>div').innerText,
+                            articles[i].querySelector('[data-testid="retweet"]>div').innerText)
                         list_articles.push(a);
                         let button = document.createElement("Button");
                         button.innerHTML = "TEST";
@@ -71,8 +81,8 @@ function tweet_text(page) {
                         document.getElementById(tweet_id).appendChild(button)
                     }
                 }
-                // sendTweet(list_articles.slice(last_index+1)); 
-                // last_index = list_articles.length-1 ;
+                sendTweet(list_articles.slice(last_index+1)); 
+                last_index = list_articles.length-1 ;
 
             }
             page.oldScroll = page.scrollY;
@@ -83,6 +93,7 @@ function tweet_text(page) {
 
 }
 
+// integrated in the previous function
 function tweet_metadata() {
     //habib
     // nbr like,retweet, comment

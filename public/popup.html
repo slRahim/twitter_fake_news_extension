@@ -21,53 +21,46 @@
     </div>
   </nav>
 
-  <div style="padding: 10px">
+  <div style="padding: 2px">
+    <ul class="nav nav-pills mb-3" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
+          type="button" role="tab" aria-controls="pills-home" aria-selected="true">
+          <span class="material-symbols-outlined">
+            my_location
+            </span>
+        </button>
+      </li>
+      <li class="nav-item" role="presentation" >
+        <button class="nav-link" id="pills-dashboard-tab" data-bs-toggle="pill" data-bs-target="#pills-dashboard"
+          type="button" role="tab" aria-controls="pills-dashboard" aria-selected="false">
+          <span class="material-symbols-outlined">
+            dashboard
+            </span>
+        </button>
+      </li>
+    </ul>
     <div class="tab-content" id="pills-tabContent">
+      <!-- tab 1 home -->
       <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
         tabindex="0">
         <br>
         <div class="row align-items-center">
-          <p class="text-center fw-bold fs-3">Detected: <span id="id_co_detection">11</span></p>
-          <p class="text-center fs-6">Total: <span id="id_total_detection">100</span></p>
+          <p class="text-center fw-bold fs-3">Detected: <span id="id_co_detection">0</span></p>
+          <p class="text-center fs-6">Total: <span id="id_total_detection">0</span></p>
           <div class="d-flex justify-content-center">
-            <div class="form-check form-switch py-3 ">
-              <input class="form-check-input " style="transform: scale(3);" type="checkbox" role="switch"
-                id="flexSwitchCheckChecked">
-            </div>
+            <p id="emoji_status_id" style="font-size:100px">&#128564;</p>
           </div>
-
         </div>
-        <br>
-        <br>
         <div class="row align-items-center">
-          <p id="current_url_id" class="text-center fw-bolder fs-5">800.0.0.1</p>
-          <p class="text-center fs-6">Protection is enabled</p>
+          <p id="current_url_id" class="text-center fw-bolder fs-5">url</p>
+          <p id="current_url_desc_id" class="text-center fs-6">Protection is enabled</p>
         </div>
-        <ul class="nav nav-pills nav-fill">
-          <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
-              type="button" role="tab" aria-controls="pills-home" aria-selected="true">Actions</button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
-              type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Statistique</button>
-          </li>
-        </ul>
-        <br>
-        <div class="row">
-          <p class="text-start fw-semibold"><span class="material-symbols-outlined" style="color: green">
-              safety_check
-            </span> Start aligned text on all viewport sizes.</p>
-        </div>
-        <br>
-        <div class="row">
-          <p class="text-start fw-semibold"><span class="material-symbols-outlined" style="color: yellow">
-              flag
-            </span> Start aligned text on all viewport sizes.</p>
-        </div>
+      
       </div>
 
-      <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
+      <!-- tab 2 dashboard -->
+      <div class="tab-pane fade" id="pills-dashboard" role="tabpanel" aria-labelledby="pills-dashboard-tab" tabindex="0">
         <div class="row">
           <div class="col">
             <select class="form-select" aria-label="Default select example">
@@ -86,32 +79,18 @@
             </select>
           </div>
         </div>
+
         <br>
         <div class="row align-items-center">
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Pushkin_population_history.svg/1200px-Pushkin_population_history.svg.png"
             width="300" height="250" alt="" class="">
         </div>
-        <br>
-        <ul class="nav nav-pills nav-fill">
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
-              type="button" role="tab" aria-controls="pills-home" aria-selected="true">Actions</button>
-          </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
-              type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Statistique</button>
-          </li>
-        </ul>
-        <br>
-        <p class="text-start">Start aligned text on all viewport sizes.</p>
-        <p class="text-start">Start aligned text </p>
+
       </div>
     </div>
 
   </div>
 
-  <section style="background-color: rgb(241, 237, 237)">
-    <p class="text-center fw-bolder">CopyRight reserved 2022 - M2SID</p>
-  </section>
+
 </div>
