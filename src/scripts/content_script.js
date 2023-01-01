@@ -1,13 +1,11 @@
 import { sendTweet } from "../api/api"
 import Article from "../model/article";
+import '../popup/scss/style.scss'
 
 window.addEventListener('load', function () {
     console.log("hello")
-    // tweet_text(this.window)
+    tweet_text(this.window);
     test_edition(this.window);
-    // console.log("send data to python ...")
-    // sendTweet();
-
 
 })
 
@@ -28,22 +26,30 @@ function tweet_text(page) {
             let a;
             if (!list_ids.includes(tweet_id)) {
                 list_ids.push(tweet_id);
-                a = new Article(tweet_id, 
-                    document.getElementById(tweet_id).firstChild.innerText, 
-                    articles[i].querySelector('[data-testid="User-Names"]').innerText, 
+                a = new Article(tweet_id,
+                    document.getElementById(tweet_id).firstChild.innerText,
+                    articles[i].querySelector('[data-testid="User-Names"]').innerText,
                     articles[i].querySelector('[data-testid="app-text-transition-container"]>span').innerText,
                     articles[i].querySelector('[data-testid="reply"]>div').innerText,
                     articles[i].querySelector('[data-testid="retweet"]>div').innerText)
                 list_articles.push(a);
+
                 let button = document.createElement("Button");
-                button.innerHTML = "TEST";
-                button.style = "top:8%;right:8%;position:fixed;";
+                button.innerHTML = "?";
+                button.classList.add("btn");
+                button.classList.add("btn-outline-primary");
+                button.style = "top:6%;right:6%;position:fixed;--bs-btn-font-weight:950";
                 button.setAttribute("id", "btn_fk_" + tweet_id)
                 button.setAttribute("type", "button")
                 button.addEventListener("click", function () {
-                    console.log(list_articles[list_ids.indexOf(tweet_id)].tweet_text);
+                    console.log(list_articles[list_ids.indexOf(tweet_id)]);
+                    // get result from local storage or send request to server
                 }, false)
-                document.getElementById(tweet_id).appendChild(button)
+
+                let div_result = document.createElement('div')
+                div_result.setAttribute("id", "div_fk_" + tweet_id)
+                div_result.appendChild(button);
+                document.getElementById(tweet_id).appendChild(div_result)
             }
 
         }
@@ -63,26 +69,34 @@ function tweet_text(page) {
                     let a;
                     if (!list_ids.includes(tweet_id)) {
                         list_ids.push(tweet_id);
-                        a = new Article(tweet_id, 
-                            document.getElementById(tweet_id).firstChild.innerText, 
-                            articles[i].querySelector('[data-testid="User-Names"]').innerText, 
+                        a = new Article(tweet_id,
+                            document.getElementById(tweet_id).firstChild.innerText,
+                            articles[i].querySelector('[data-testid="User-Names"]').innerText,
                             articles[i].querySelector('[data-testid="app-text-transition-container"]>span').innerText,
                             articles[i].querySelector('[data-testid="reply"]>div').innerText,
                             articles[i].querySelector('[data-testid="retweet"]>div').innerText)
                         list_articles.push(a);
+
                         let button = document.createElement("Button");
-                        button.innerHTML = "TEST";
-                        button.style = "top:8%;right:8%;position:fixed;";
+                        button.innerHTML = "?";
+                        button.classList.add("btn");
+                        button.classList.add("btn-outline-primary");
+                        button.style = "top:6%;right:6%;position:fixed;--bs-btn-font-weight:950";
                         button.setAttribute("id", "btn_fk_" + tweet_id)
                         button.setAttribute("type", "button")
                         button.addEventListener("click", function () {
-                            console.log(list_articles[list_ids.indexOf(tweet_id)].tweet_text)
+                            console.log(list_articles[list_ids.indexOf(tweet_id)])
+                            // get result from local storage or send request to server
                         }, false)
-                        document.getElementById(tweet_id).appendChild(button)
+
+                        let div_result = document.createElement('div')
+                        div_result.setAttribute("id", "div_fk_" + tweet_id)
+                        div_result.appendChild(button);
+                        document.getElementById(tweet_id).appendChild(div_result)
                     }
                 }
-                sendTweet(list_articles.slice(last_index+1)); 
-                last_index = list_articles.length-1 ;
+                sendTweet(list_articles.slice(last_index + 1));
+                last_index = list_articles.length - 1;
 
             }
             page.oldScroll = page.scrollY;
@@ -92,25 +106,6 @@ function tweet_text(page) {
 
 
 }
-
-// integrated in the previous function
-function tweet_metadata() {
-    //habib
-    // nbr like,retweet, comment
-    setTimeout(() => {
-        const articles = document.getElementsByTagName("article");
-
-        for (var i = 0; i < articles.length; i++) {
-            console.log(articles[i].querySelector('[data-testid="User-Names"]').innerText);
-            console.log(articles[i].querySelector('[data-testid="reply"]>div').innerText);
-            console.log(articles[i].querySelector('[data-testid="retweet"]>div').innerText);
-            console.log(articles[i].querySelector('[data-testid="app-text-transition-container"]>span').innerText);
-        }
-
-    }, 7000)
-}
-
-
 
 // ******************************part II*******************************************************************
 function test_edition(page) {
@@ -137,43 +132,26 @@ function test_edition(page) {
 }
 
 function btn_test_edition() {
-    console.log("fghjkl");
     var text = document.querySelector('[data-text="true"]').innerHTML;
     if (text != "") alert(text);
 }
 
-
 function inactiveBtnTest() {
     let btn = document.getElementById("Test_News");
-    btn.style.backgroundColor = "#1D9BF085";
-    btn.style.color = "#ffffff85";
-    btn.style.cursor = "context-menu";
+    btn.classList.add('btn_inactive')
 }
 
 function activeBtnTest() {
     let btn = document.getElementById("Test_News");
-    btn.style.backgroundColor = "#1D9BF0";
-    btn.style.color = "#ffffff";
-    btn.style.cursor = "pointer";
+    btn.classList.add('btn_active')
 }
 
 function createBtnTest() {
     let button = document.createElement("Button");
-    button.innerHTML = "Detecter";
-
+    button.innerHTML = "Test";
     button.setAttribute("id", "Test_News")
     button.setAttribute("type", "button")
-    button.style.top = "0px";
-    button.style.right = "30px";
-    button.style.position = "absolute";
-    button.style.width = "70px";
-    button.style.height = "28px";
-    button.style.fontWeight = "700";
-    button.style.border = "0px";
-    button.style.borderRadius = "30px";
-    button.style.backgroundColor = "#1D9CF085";
-    button.style.color = "#ffffff85";
-    button.style.cursor = "context-menu";
+    button.classList.add('btn_detect')
     button.addEventListener("click", btn_test_edition, false);
     document.querySelector('[role="progressbar"]').parentElement.appendChild(button);
     var inputTxt = document.querySelector('[data-text="true"]');

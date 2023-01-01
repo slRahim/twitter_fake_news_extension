@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     getDetectedCo(function (result) {
         if (result.detected == undefined) {
-            document.getElementById('id_co_detection').innerHTML = "0"
+            document.getElementById('id_co_detection').innerHTML = 0
         } else {
             document.getElementById('id_co_detection').innerHTML = result.detected
         }
@@ -54,9 +54,13 @@ function getTotalCo(callback) {
         callback(result);
     });
 }
-function updateTotal(value) {
-    chrome.storage.sync.set({ total: value }).then(() => {
-        console.log("Value is set to " + value);
+
+export function updateTotal(value) {
+    chrome.storage.sync.get(["total"]).then((result) => {
+        let res = result.total + value;
+        chrome.storage.sync.set({ total: res }).then(() => {
+            console.log("total Value is set to " + res);
+        });
     });
 }
 
@@ -64,11 +68,22 @@ function getDetectedCo(callback) {
     chrome.storage.session.get(["detected"]).then((result) => {
         callback(result);
     });
+
 }
-function updateCurrentCo(value) {
-    chrome.storage.session.set({ detected: value }).then(() => {
-        console.log("Value is set to " + value);
+
+export function updateCurrentCo(value) {
+    chrome.storage.session.get(["detected"]).then((result) => {
+        let res
+        if(result.detected == undefined){
+            res = value ;
+        }else{
+            res = result.detected + value; 
+        }
+        chrome.storage.session.set({ detected: res }).then(() => {
+            console.log("detected Value is set to " + res);
+        });
     });
+
 }
 
 
