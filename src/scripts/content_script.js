@@ -42,8 +42,9 @@ function tweet_text(page) {
                 button.setAttribute("id", "btn_fk_" + tweet_id)
                 button.setAttribute("type", "button")
                 button.addEventListener("click", function () {
-                    console.log(list_articles[list_ids.indexOf(tweet_id)]);
-                    // get result from local storage or send request to server
+                    document.getElementById('btn_fk_' + tweet_id).disabled = true;
+                    sendTweet([a]);
+    
                 }, false)
 
                 let div_result = document.createElement('div')
@@ -53,8 +54,8 @@ function tweet_text(page) {
             }
 
         }
-        sendTweet(list_articles);
-        last_index = list_articles.length - 1;
+        // sendTweet(list_articles);
+        // last_index = list_articles.length - 1;
 
         // part 2 scroll event
         page.onscroll = function () {
@@ -85,8 +86,9 @@ function tweet_text(page) {
                         button.setAttribute("id", "btn_fk_" + tweet_id)
                         button.setAttribute("type", "button")
                         button.addEventListener("click", function () {
-                            console.log(list_articles[list_ids.indexOf(tweet_id)])
-                            // get result from local storage or send request to server
+                            document.getElementById('btn_fk_' + tweet_id).disabled = true;
+                            sendTweet([a]);
+                        
                         }, false)
 
                         let div_result = document.createElement('div')
@@ -95,8 +97,8 @@ function tweet_text(page) {
                         document.getElementById(tweet_id).appendChild(div_result)
                     }
                 }
-                sendTweet(list_articles.slice(last_index + 1));
-                last_index = list_articles.length - 1;
+                // sendTweet(list_articles.slice(last_index + 1));
+                // last_index = list_articles.length - 1;
 
             }
             page.oldScroll = page.scrollY;

@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
 
+    // current
     getDetectedCo(function (result) {
         if (result.detected == undefined) {
             document.getElementById('id_co_detection').innerHTML = 0
