@@ -115,10 +115,10 @@ function test_edition(page) {
         page.setTimeout(() => {
             inputObserver();
             createBtnTest();
+            createLabelResult();
             var href = location.href;
             document.body.addEventListener('click', () => {
                 requestAnimationFrame(() => {
-                    console.log(href + "88888888" + location.href);
                     if (location.href != href && location.href == "https://twitter.com/home") {
                         createBtnTest();
                         inputObserver();
@@ -133,6 +133,19 @@ function test_edition(page) {
 
 }
 
+function createLabelResult() {
+    let label = document.createElement("span");
+    label.innerHTML = "Result";
+    label.setAttribute("id", "Result_Tweet")
+    label.classList.add('label_result')
+    let btn = document.getElementById('Test_News');
+    document.querySelector('[role="progressbar"]').parentElement.insertBefore(label, btn);
+
+
+    //var inputTxt = document.querySelector('[data-text="true"]');
+    //inputTxt.innerHTML != "" ? activeBtnTest() : inactiveBtnTest();
+}
+
 function btn_test_edition() {
     var text = document.querySelector('[data-text="true"]').innerHTML;
     if (text != "") alert(text);
@@ -140,11 +153,13 @@ function btn_test_edition() {
 
 function inactiveBtnTest() {
     let btn = document.getElementById("Test_News");
+    btn.classList.remove('btn_active')
     btn.classList.add('btn_inactive')
 }
 
 function activeBtnTest() {
     let btn = document.getElementById("Test_News");
+    btn.classList.remove('btn_inactive')
     btn.classList.add('btn_active')
 }
 
