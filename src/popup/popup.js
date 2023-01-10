@@ -74,10 +74,10 @@ function getDetectedCo(callback) {
 export function updateCurrentCo(value) {
     chrome.storage.session.get(["detected"]).then((result) => {
         let res
-        if(result.detected == undefined){
-            res = value ;
-        }else{
-            res = result.detected + value; 
+        if (result.detected == undefined) {
+            res = value;
+        } else {
+            res = result.detected + value;
         }
         chrome.storage.session.set({ detected: res }).then(() => {
             console.log("detected Value is set to " + res);
