@@ -1,4 +1,4 @@
-import { sendTweet } from "../api/api"
+import { testTweetTimeLine, testInputTweet } from "../api/api"
 import Article from "../model/article";
 import '../popup/scss/style.scss'
 
@@ -17,48 +17,52 @@ function tweet_text(page) {
 
     console.log("Extension is loading...")
 
-    page.setTimeout(function () {
+    page.setTimeout(async function () {
         console.log("load is done")
         // part 1 before scroll
         const articles = document.getElementsByTagName("article");
         for (let i = 0; i < articles.length; i++) {
-            let tweet_id = articles[i].querySelector('[data-testid="tweetText"]').getAttribute("id")
-            let a;
-            if (!list_ids.includes(tweet_id)) {
-                list_ids.push(tweet_id);
-                a = new Article(tweet_id,
-                    document.getElementById(tweet_id).firstChild.innerText,
-                    articles[i].querySelector('[data-testid="User-Names"]').innerText,
-                    articles[i].querySelector('[data-testid="app-text-transition-container"]>span').innerText,
-                    articles[i].querySelector('[data-testid="reply"]>div').innerText,
-                    articles[i].querySelector('[data-testid="retweet"]>div').innerText)
-                list_articles.push(a);
+            if (articles[i].querySelector('[data-testid="tweetText"]') != undefined) {
+                let tweet_id = articles[i].querySelector('[data-testid="tweetText"]').getAttribute("id")
+                let a;
+                if (!list_ids.includes(tweet_id)) {
+                    list_ids.push(tweet_id);
+                    a = new Article(tweet_id,
+                        document.getElementById(tweet_id).firstChild.innerText,
+                        articles[i].querySelector('[data-testid="User-Names"]').innerText,
+                        articles[i].querySelector('[data-testid="app-text-transition-container"]>span').innerText,
+                        articles[i].querySelector('[data-testid="reply"]>div').innerText,
+                        articles[i].querySelector('[data-testid="retweet"]>div').innerText)
+                    list_articles.push(a);
 
-                let button = document.createElement("Button");
-                button.innerHTML = "?";
-                button.classList.add("btn");
-                button.classList.add("btn-outline-primary");
-                button.style = "top:6%;right:6%;position:fixed;--bs-btn-font-weight:950";
-                button.setAttribute("id", "btn_fk_" + tweet_id)
-                button.setAttribute("type", "button")
-                button.addEventListener("click", function () {
-                    document.getElementById('btn_fk_' + tweet_id).disabled = true;
-                    sendTweet([a]);
-    
-                }, false)
+                    let button = document.createElement("Button");
+                    button.innerHTML = "?";
+                    button.classList.add("btn");
+                    button.classList.add("btn-outline-primary");
+                    // button.style = "top:6%;right:6%;position:fixed;--bs-btn-font-weight:950";
+                    button.setAttribute("id", "btn_fk_" + tweet_id)
+                    button.setAttribute("type", "button")
+                    // button.addEventListener("click", function () {
+                    //     document.getElementById('btn_fk_' + tweet_id).disabled = true;
+                    //     sendTweet([a]);
 
-                let div_result = document.createElement('div')
-                div_result.setAttribute("id", "div_fk_" + tweet_id)
-                div_result.appendChild(button);
-                document.getElementById(tweet_id).appendChild(div_result)
+                    // }, false)
+
+                    let div_result = document.createElement('div')
+                    div_result.setAttribute("id", "div_fk_" + tweet_id)
+                    div_result.style = "top:6%;right:-3%;position:fixed;--bs-btn-font-weight:950";
+                    div_result.appendChild(button);
+                    document.getElementById(tweet_id).appendChild(div_result)
+                }
             }
 
+
         }
-        // sendTweet(list_articles);
-        // last_index = list_articles.length - 1;
+        await testTweetTimeLine(list_articles);
+        last_index = list_articles.length - 1;
 
         // part 2 scroll event
-        page.onscroll = function () {
+        page.onscroll = async function () {
             if (page.oldScroll > page.scrollY) {
                 // true up
                 console.log("scroll up")
@@ -66,39 +70,42 @@ function tweet_text(page) {
                 //false down
                 const articles = document.getElementsByTagName("article");
                 for (let i = 0; i < articles.length; i++) {
-                    let tweet_id = articles[i].querySelector('[data-testid="tweetText"]').getAttribute("id")
-                    let a;
-                    if (!list_ids.includes(tweet_id)) {
-                        list_ids.push(tweet_id);
-                        a = new Article(tweet_id,
-                            document.getElementById(tweet_id).firstChild.innerText,
-                            articles[i].querySelector('[data-testid="User-Names"]').innerText,
-                            articles[i].querySelector('[data-testid="app-text-transition-container"]>span').innerText,
-                            articles[i].querySelector('[data-testid="reply"]>div').innerText,
-                            articles[i].querySelector('[data-testid="retweet"]>div').innerText)
-                        list_articles.push(a);
+                    if (articles[i].querySelector('[data-testid="tweetText"]') != undefined) {
+                        let tweet_id = articles[i].querySelector('[data-testid="tweetText"]').getAttribute("id")
+                        let a;
+                        if (!list_ids.includes(tweet_id)) {
+                            list_ids.push(tweet_id);
+                            a = new Article(tweet_id,
+                                document.getElementById(tweet_id).firstChild.innerText,
+                                articles[i].querySelector('[data-testid="User-Names"]').innerText,
+                                articles[i].querySelector('[data-testid="app-text-transition-container"]>span').innerText,
+                                articles[i].querySelector('[data-testid="reply"]>div').innerText,
+                                articles[i].querySelector('[data-testid="retweet"]>div').innerText)
+                            list_articles.push(a);
 
-                        let button = document.createElement("Button");
-                        button.innerHTML = "?";
-                        button.classList.add("btn");
-                        button.classList.add("btn-outline-primary");
-                        button.style = "top:6%;right:6%;position:fixed;--bs-btn-font-weight:950";
-                        button.setAttribute("id", "btn_fk_" + tweet_id)
-                        button.setAttribute("type", "button")
-                        button.addEventListener("click", function () {
-                            document.getElementById('btn_fk_' + tweet_id).disabled = true;
-                            sendTweet([a]);
-                        
-                        }, false)
+                            let button = document.createElement("Button");
+                            button.innerHTML = "?";
+                            button.classList.add("btn");
+                            button.classList.add("btn-outline-primary");
+                            button.setAttribute("id", "btn_fk_" + tweet_id)
+                            button.setAttribute("type", "button")
+                            // button.addEventListener("click", function () {
+                            //     document.getElementById('btn_fk_' + tweet_id).disabled = true;
+                            //     sendTweet([a]);
 
-                        let div_result = document.createElement('div')
-                        div_result.setAttribute("id", "div_fk_" + tweet_id)
-                        div_result.appendChild(button);
-                        document.getElementById(tweet_id).appendChild(div_result)
+                            // }, false)
+
+                            let div_result = document.createElement('div')
+                            div_result.setAttribute("id", "div_fk_" + tweet_id)
+                            div_result.style = "top:6%;right:-3%;position:fixed;--bs-btn-font-weight:950";
+                            div_result.appendChild(button);
+                            document.getElementById(tweet_id).appendChild(div_result)
+                        }
                     }
+
                 }
-                // sendTweet(list_articles.slice(last_index + 1));
-                // last_index = list_articles.length - 1;
+                await testTweetTimeLine(list_articles.slice(last_index + 1));
+                last_index = list_articles.length - 1;
 
             }
             page.oldScroll = page.scrollY;
@@ -114,79 +121,66 @@ function test_edition(page) {
     if (location.href == "https://twitter.com/home") {
         page.setTimeout(() => {
             inputObserver();
-            createBtnTest();
-            createLabelResult();
-            var href = location.href;
-            document.body.addEventListener('click', () => {
-                requestAnimationFrame(() => {
-                    if (location.href != href && location.href == "https://twitter.com/home") {
-                        createBtnTest();
-                        inputObserver();
-                    }
-                    href = location.href;
-                });
-            }, true);
-
+            createBtnTest()
         }, 5000);
     }
-
-
 }
 
-function createLabelResult() {
-    let label = document.createElement("span");
-    label.innerHTML = "Result";
-    label.setAttribute("id", "Result_Tweet")
-    label.classList.add('label_result')
-    let btn = document.getElementById('Test_News');
-    document.querySelector('[role="progressbar"]').parentElement.insertBefore(label, btn);
+// function createLabelResult() {
+//     let label = document.createElement("span");
+//     label.innerHTML = "Result";
+//     label.setAttribute("id", "Result_Tweet")
+//     label.classList.add('label_result')
+//     let btn = document.getElementById('Test_News');
+//     document.querySelector('[role="progressbar"]').parentElement.insertBefore(label, btn);
 
 
-    //var inputTxt = document.querySelector('[data-text="true"]');
-    //inputTxt.innerHTML != "" ? activeBtnTest() : inactiveBtnTest();
-}
+//     //var inputTxt = document.querySelector('[data-text="true"]');
+//     //inputTxt.innerHTML != "" ? activeBtnTest() : inactiveBtnTest();
+// }
 
-function btn_test_edition() {
-    var text = document.querySelector('[data-text="true"]').innerHTML;
-    if (text != "") alert(text);
+async function btn_test_edition() {
+    let text = document.querySelector('[data-text="true"]').innerHTML;
+    console.log(text)
+    if (text != ""){
+        let article = new Article("test_input" , text,"me",0,0,0)
+       await testInputTweet(article)
+    }
 }
 
 function inactiveBtnTest() {
-    let btn = document.getElementById("Test_News");
-    btn.classList.remove('btn_active')
-    btn.classList.add('btn_inactive')
+    let btn = document.getElementById("test_tweet");
+    btn.disabled = true ;
 }
 
 function activeBtnTest() {
-    let btn = document.getElementById("Test_News");
-    btn.classList.remove('btn_inactive')
-    btn.classList.add('btn_active')
+    let btn = document.getElementById("test_tweet");
+    btn.disabled = false;
 }
 
 function createBtnTest() {
     let button = document.createElement("Button");
     button.innerHTML = "Test";
-    button.setAttribute("id", "Test_News")
+    button.setAttribute("id", "test_tweet")
     button.setAttribute("type", "button")
+    button.classList.add('btn')
+    button.classList.add('btn-primary')
     button.classList.add('btn_detect')
     button.addEventListener("click", btn_test_edition, false);
     document.querySelector('[role="progressbar"]').parentElement.appendChild(button);
-    var inputTxt = document.querySelector('[data-text="true"]');
+    let inputTxt = document.querySelector('[data-text="true"]');
     inputTxt.innerHTML != "" ? activeBtnTest() : inactiveBtnTest();
 }
 
 function inputObserver() {
-    var inputTxt = document.querySelector('[data-text="true"]').parentElement;
-    //var y = document.querySelector('[data-contents="true"]').parentElement;
-
-    var observer = new MutationObserver(function (mutations) {
+    let inputTxt = document.querySelector('[data-text="true"]').parentElement;
+    let observer = new MutationObserver(function (mutations) {
         mutations.forEach(function (mutation) {
             inputTxt.children[0].innerHTML != "" ? activeBtnTest() : inactiveBtnTest();
-            //console.info("EVENT TRIGGERT " + mutation.target.id);
         });
     });
 
-    var config = { attributes: true, childList: true, characterData: true };
+    let config = { attributes: true, childList: true, characterData: true };
     observer.observe(inputTxt, config);
 }
 

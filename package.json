@@ -26,6 +26,7 @@
     "@types/chrome": "0.0.206",
     "axios": "^1.2.1",
     "bootstrap": "^5.2.3",
+    "chart.js": "^4.1.2",
     "copy-webpack-plugin": "^11.0.0",
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1"
