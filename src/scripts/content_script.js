@@ -24,12 +24,14 @@ function tweet_text(page) {
         for (let i = 0; i < articles.length; i++) {
             if (articles[i].querySelector('[data-testid="tweetText"]') != undefined) {
                 let tweet_id = articles[i].querySelector('[data-testid="tweetText"]').getAttribute("id")
-                let a;
+                let a ;
                 if (!list_ids.includes(tweet_id)) {
                     list_ids.push(tweet_id);
                     a = new Article(tweet_id,
                         document.getElementById(tweet_id).firstChild.innerText,
                         articles[i].querySelector('[data-testid="User-Names"]').innerText,
+                        articles[i].querySelector('[data-testid="User-Names"]').innerText.split("@")[1].split("·")[0],
+                        articles[i].querySelector('[data-testid="User-Names"]').getElementsByTagName('time')[0].getAttribute('datetime'),
                         articles[i].querySelector('[data-testid="app-text-transition-container"]>span').innerText,
                         articles[i].querySelector('[data-testid="reply"]>div').innerText,
                         articles[i].querySelector('[data-testid="retweet"]>div').innerText)
@@ -39,12 +41,11 @@ function tweet_text(page) {
                     button.innerHTML = "?";
                     button.classList.add("btn");
                     button.classList.add("btn-outline-primary");
-                    // button.style = "top:6%;right:6%;position:fixed;--bs-btn-font-weight:950";
                     button.setAttribute("id", "btn_fk_" + tweet_id)
                     button.setAttribute("type", "button")
                     // button.addEventListener("click", function () {
-                    //     document.getElementById('btn_fk_' + tweet_id).disabled = true;
-                    //     sendTweet([a]);
+                    //     console.log(a.date_time_post);
+                        
 
                     // }, false)
 
@@ -78,6 +79,8 @@ function tweet_text(page) {
                             a = new Article(tweet_id,
                                 document.getElementById(tweet_id).firstChild.innerText,
                                 articles[i].querySelector('[data-testid="User-Names"]').innerText,
+                                articles[i].querySelector('[data-testid="User-Names"]').innerText.split("@")[1].split("·")[0],
+                                articles[i].querySelector('[data-testid="User-Names"]').getElementsByTagName('time')[0].getAttribute('datetime'),
                                 articles[i].querySelector('[data-testid="app-text-transition-container"]>span').innerText,
                                 articles[i].querySelector('[data-testid="reply"]>div').innerText,
                                 articles[i].querySelector('[data-testid="retweet"]>div').innerText)
