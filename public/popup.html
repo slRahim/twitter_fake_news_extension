@@ -21,7 +21,7 @@
     </div>
   </nav>
 
-  <div style="padding: 2px">
+  <div class="p-3">
     <ul class="nav nav-pills mb-3" role="tablist">
       <li class="nav-item" role="presentation">
         <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
@@ -64,27 +64,24 @@
         <div class="row">
           <div class="col">
             <select class="form-select" aria-label="Default select example">
-              <option selected>Open this select menu</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+              <option selected>Last 12 hours</option>
+              <option value="1">Last 24 hours</option>
+              <option value="2">Last week</option>
+              <option value="3">Last mounth</option>
             </select>
           </div>
           <div class="col">
-            <select class="form-select" aria-label="Default select example">
-              <option selected>Open this select menu</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
+            
           </div>
         </div>
 
         <br>
         <div class="row align-items-center">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Pushkin_population_history.svg/1200px-Pushkin_population_history.svg.png"
-            width="300" height="250" alt="" class="">
+          <div id="chart_ui">
+            <canvas id="rank_user_id"></canvas>
+            <hr>
+            <canvas id="dist_data_id"></canvas>
+          </div>
         </div>
 
       </div>
