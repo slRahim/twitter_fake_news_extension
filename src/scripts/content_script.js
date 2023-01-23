@@ -43,11 +43,11 @@ function tweet_text(page) {
                     button.classList.add("btn-outline-primary");
                     button.setAttribute("id", "btn_fk_" + tweet_id)
                     button.setAttribute("type", "button")
-                    // button.addEventListener("click", function () {
-                    //     console.log(a.date_time_post);
-                        
+                    button.addEventListener("click", function () {
+                        document.getElementById('btn_fk_' + tweet_id).disabled = true;
+                        testTweetTimeLine([a]);
 
-                    // }, false)
+                    }, false)
 
                     let div_result = document.createElement('div')
                     div_result.setAttribute("id", "div_fk_" + tweet_id)
@@ -59,8 +59,8 @@ function tweet_text(page) {
 
 
         }
-        await testTweetTimeLine(list_articles);
-        last_index = list_articles.length - 1;
+        // await testTweetTimeLine(list_articles);
+        // last_index = list_articles.length - 1;
 
         // part 2 scroll event
         page.onscroll = async function () {
@@ -92,11 +92,11 @@ function tweet_text(page) {
                             button.classList.add("btn-outline-primary");
                             button.setAttribute("id", "btn_fk_" + tweet_id)
                             button.setAttribute("type", "button")
-                            // button.addEventListener("click", function () {
-                            //     document.getElementById('btn_fk_' + tweet_id).disabled = true;
-                            //     sendTweet([a]);
+                            button.addEventListener("click", function () {
+                                document.getElementById('btn_fk_' + tweet_id).disabled = true;
+                                testTweetTimeLine([a]);
 
-                            // }, false)
+                            }, false)
 
                             let div_result = document.createElement('div')
                             div_result.setAttribute("id", "div_fk_" + tweet_id)
@@ -107,8 +107,8 @@ function tweet_text(page) {
                     }
 
                 }
-                await testTweetTimeLine(list_articles.slice(last_index + 1));
-                last_index = list_articles.length - 1;
+                // await testTweetTimeLine(list_articles.slice(last_index + 1));
+                // last_index = list_articles.length - 1;
 
             }
             page.oldScroll = page.scrollY;
