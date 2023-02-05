@@ -24,17 +24,19 @@ function tweet_text(page) {
         for (let i = 0; i < articles.length; i++) {
             if (articles[i].querySelector('[data-testid="tweetText"]') != undefined) {
                 let tweet_id = articles[i].querySelector('[data-testid="tweetText"]').getAttribute("id")
-                let a ;
+                let a;
                 if (!list_ids.includes(tweet_id)) {
                     list_ids.push(tweet_id);
                     a = new Article(tweet_id,
-                        document.getElementById(tweet_id).firstChild.innerText,
-                        articles[i].querySelector('[data-testid="User-Names"]').innerText,
-                        articles[i].querySelector('[data-testid="User-Names"]').innerText.split("@")[1].split("·")[0],
+                        articles[i].querySelector('[data-testid="User-Names"]').getElementsByTagName('time')[0].parentElement.getAttribute("href"),
+                        document.getElementById(tweet_id).innerText,
+                        articles[i].querySelector('[data-testid="User-Names"]').innerText.split("\n")[0],
+                        articles[i].querySelector('[data-testid="User-Names"]').innerText.split("\n")[1],
                         articles[i].querySelector('[data-testid="User-Names"]').getElementsByTagName('time')[0].getAttribute('datetime'),
-                        articles[i].querySelector('[data-testid="app-text-transition-container"]>span').innerText,
-                        articles[i].querySelector('[data-testid="reply"]>div').innerText,
-                        articles[i].querySelector('[data-testid="retweet"]>div').innerText)
+                        articles[i].querySelector('[data-testid="like"]').innerText,
+                        articles[i].querySelector('[data-testid="reply"]').innerText,
+                        articles[i].querySelector('[data-testid="retweet"]').innerText
+                    )
                     list_articles.push(a);
 
                     let button = document.createElement("Button");
@@ -43,11 +45,11 @@ function tweet_text(page) {
                     button.classList.add("btn-outline-primary");
                     button.setAttribute("id", "btn_fk_" + tweet_id)
                     button.setAttribute("type", "button")
-                    button.addEventListener("click", function () {
-                        document.getElementById('btn_fk_' + tweet_id).disabled = true;
-                        testTweetTimeLine([a]);
+                    // button.addEventListener("click", function () {
+                    //     document.getElementById('btn_fk_' + tweet_id).disabled = true;
+                    //     testTweetTimeLine([a]);
 
-                    }, false)
+                    // }, false)
 
                     let div_result = document.createElement('div')
                     div_result.setAttribute("id", "div_fk_" + tweet_id)
@@ -59,8 +61,8 @@ function tweet_text(page) {
 
 
         }
-        // await testTweetTimeLine(list_articles);
-        // last_index = list_articles.length - 1;
+        await testTweetTimeLine(list_articles);
+        last_index = list_articles.length - 1;
 
         // part 2 scroll event
         page.onscroll = async function () {
@@ -77,7 +79,8 @@ function tweet_text(page) {
                         if (!list_ids.includes(tweet_id)) {
                             list_ids.push(tweet_id);
                             a = new Article(tweet_id,
-                                document.getElementById(tweet_id).firstChild.innerText,
+                                articles[i].querySelector('[data-testid="User-Names"]').getElementsByTagName('time')[0].parentElement.getAttribute("href"),
+                                document.getElementById(tweet_id).innerText,
                                 articles[i].querySelector('[data-testid="User-Names"]').innerText,
                                 articles[i].querySelector('[data-testid="User-Names"]').innerText.split("@")[1].split("·")[0],
                                 articles[i].querySelector('[data-testid="User-Names"]').getElementsByTagName('time')[0].getAttribute('datetime'),
@@ -92,11 +95,11 @@ function tweet_text(page) {
                             button.classList.add("btn-outline-primary");
                             button.setAttribute("id", "btn_fk_" + tweet_id)
                             button.setAttribute("type", "button")
-                            button.addEventListener("click", function () {
-                                document.getElementById('btn_fk_' + tweet_id).disabled = true;
-                                testTweetTimeLine([a]);
+                            // button.addEventListener("click", function () {
+                            //     document.getElementById('btn_fk_' + tweet_id).disabled = true;
+                            //     testTweetTimeLine([a]);
 
-                            }, false)
+                            // }, false)
 
                             let div_result = document.createElement('div')
                             div_result.setAttribute("id", "div_fk_" + tweet_id)
@@ -107,8 +110,8 @@ function tweet_text(page) {
                     }
 
                 }
-                // await testTweetTimeLine(list_articles.slice(last_index + 1));
-                // last_index = list_articles.length - 1;
+                await testTweetTimeLine(list_articles.slice(last_index + 1));
+                last_index = list_articles.length - 1;
 
             }
             page.oldScroll = page.scrollY;
@@ -145,15 +148,15 @@ function test_edition(page) {
 async function btn_test_edition() {
     let text = document.querySelector('[data-text="true"]').innerHTML;
     console.log(text)
-    if (text != ""){
-        let article = new Article("test_input" , text,"me",0,0,0)
-       await testInputTweet(article)
+    if (text != "") {
+        let article = new Article("test_input", text, "me", 0, 0, 0)
+        await testInputTweet(article)
     }
 }
 
 function inactiveBtnTest() {
     let btn = document.getElementById("test_tweet");
-    btn.disabled = true ;
+    btn.disabled = true;
 }
 
 function activeBtnTest() {

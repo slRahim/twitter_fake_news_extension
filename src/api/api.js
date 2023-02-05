@@ -1,5 +1,5 @@
 import axios from "axios";
-import { updateCurrentCo, updateTotal } from "../popup/popup";
+import { saveTweetResult, updateCurrentCo, updateTotal } from "../popup/popup";
 import '../popup/scss/style.scss'
 
 
@@ -26,7 +26,7 @@ export async function testTweetTimeLine(list_articles) {
       });
     }
     // save/update history of navigation in local storage 
-
+    await saveTweetResult(response.data.articles)
     // number of fake detected (this part of list) get from server
     // update current co session storage
     await updateCurrentCo(response.data.number_fake)

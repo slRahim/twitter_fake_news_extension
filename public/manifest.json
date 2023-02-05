@@ -10,6 +10,9 @@
       "js": ["content.bundel.js"]
     }
   ],
+  "background": {
+    "service_worker": "background.bundel.js"
+  },
   "action": {
     "default_icon": {
       "16": "assets/icon-fake-news.png",
