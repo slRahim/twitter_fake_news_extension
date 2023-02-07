@@ -24,19 +24,19 @@ function tweet_text(page) {
         for (let i = 0; i < articles.length; i++) {
             if (articles[i].querySelector('[data-testid="tweetText"]') != undefined) {
                 let tweet_id = articles[i].querySelector('[data-testid="tweetText"]').getAttribute("id")
-                let a;
+                let a ;
                 if (!list_ids.includes(tweet_id)) {
                     list_ids.push(tweet_id);
                     a = new Article(tweet_id,
-                        articles[i].querySelector('[data-testid="User-Names"]').getElementsByTagName('time')[0].parentElement.getAttribute("href"),
+                        articles[i].querySelector('[data-testid="User-Names"]').getElementsByTagName('time')[0].parentElement.getAttribute('href'),
                         document.getElementById(tweet_id).innerText,
-                        articles[i].querySelector('[data-testid="User-Names"]').innerText.split("\n")[0],
+                        articles[i].querySelector('[data-testid="User-Names"]').innerTextsplit("\n")[0],
                         articles[i].querySelector('[data-testid="User-Names"]').innerText.split("\n")[1],
                         articles[i].querySelector('[data-testid="User-Names"]').getElementsByTagName('time')[0].getAttribute('datetime'),
                         articles[i].querySelector('[data-testid="like"]').innerText,
                         articles[i].querySelector('[data-testid="reply"]').innerText,
-                        articles[i].querySelector('[data-testid="retweet"]').innerText
-                    )
+                        articles[i].querySelector('[data-testid="retweet"]').innerText)
+                        console.log(a);
                     list_articles.push(a);
 
                     let button = document.createElement("Button");
@@ -79,8 +79,7 @@ function tweet_text(page) {
                         if (!list_ids.includes(tweet_id)) {
                             list_ids.push(tweet_id);
                             a = new Article(tweet_id,
-                                articles[i].querySelector('[data-testid="User-Names"]').getElementsByTagName('time')[0].parentElement.getAttribute("href"),
-                                document.getElementById(tweet_id).innerText,
+                                document.getElementById(tweet_id).firstChild.innerText,
                                 articles[i].querySelector('[data-testid="User-Names"]').innerText,
                                 articles[i].querySelector('[data-testid="User-Names"]').innerText.split("@")[1].split("·")[0],
                                 articles[i].querySelector('[data-testid="User-Names"]').getElementsByTagName('time')[0].getAttribute('datetime'),
@@ -148,15 +147,15 @@ function test_edition(page) {
 async function btn_test_edition() {
     let text = document.querySelector('[data-text="true"]').innerHTML;
     console.log(text)
-    if (text != "") {
-        let article = new Article("test_input", text, "me", 0, 0, 0)
-        await testInputTweet(article)
+    if (text != ""){
+        let article = new Article("test_input" , text,"me",0,0,0)
+       await testInputTweet(article)
     }
 }
 
 function inactiveBtnTest() {
     let btn = document.getElementById("test_tweet");
-    btn.disabled = true;
+    btn.disabled = true ;
 }
 
 function activeBtnTest() {

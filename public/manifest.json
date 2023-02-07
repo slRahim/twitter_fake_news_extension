@@ -4,15 +4,15 @@
   "description": "Detect fake news in twitter platform",
   "permissions": ["tabs", "storage"],
   "host_permissions": ["https://*/*", "http://*/*"],
+  "background": {
+    "service_worker": "background.bundel.js"
+  },
   "content_scripts": [
     {
       "matches": ["https://*.twitter.com/home"],
       "js": ["content.bundel.js"]
     }
   ],
-  "background": {
-    "service_worker": "background.bundel.js"
-  },
   "action": {
     "default_icon": {
       "16": "assets/icon-fake-news.png",
