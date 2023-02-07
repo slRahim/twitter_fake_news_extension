@@ -2,7 +2,7 @@
   "name": "Twitter fake news",
   "version": "0.1.0",
   "description": "Detect fake news in twitter platform",
-  "permissions": ["tabs", "storage"],
+  "permissions": ["tabs", "storage" ,"unlimitedStorage"],
   "host_permissions": ["https://*/*", "http://*/*"],
   "background": {
     "service_worker": "background.bundel.js"

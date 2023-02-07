@@ -8,6 +8,9 @@ import jslinq from 'jslinq'
 
 document.addEventListener('DOMContentLoaded', function () {
 
+    document.getElementById("sync_btn").addEventListener('click', async () => {
+        await syncData();
+    })
     getTotalCo(function (result) {
         if (result.total == undefined) {
             document.getElementById('id_total_detection').innerHTML = 0
@@ -62,8 +65,8 @@ function getTotalCo(callback) {
 
 export async function updateTotal(value) {
     chrome.storage.local.get(["total"]).then((result) => {
-        if(result.total == undefined){
-            result.total = 0 ;
+        if (result.total == undefined) {
+            result.total = 0;
         }
         let res = result.total + value;
         chrome.storage.local.set({ total: res }).then(() => {
@@ -95,17 +98,17 @@ export async function updateCurrentCo(value) {
 }
 
 async function getSavedTweetResult() {
-     let res = await chrome.storage.local.get(["articles"]);
-     if(res.articles == undefined){
-         return [] ;
-     }
-     return res.articles.data ;
- }
+    let res = await chrome.storage.local.get(["articles"]);
+    if (res.articles == undefined) {
+        return [];
+    }
+    return res.articles.data;
+}
 
 export async function saveTweetResult(articles) {
     chrome.storage.local.get(["articles"]).then((result) => {
         if (result.articles == undefined) {
-            result.articles = {data:[]} ;
+            result.articles = { data: [] };
         }
         articles.forEach(element => {
             result.articles.data.push(element)
@@ -117,43 +120,72 @@ export async function saveTweetResult(articles) {
     })
 }
 
+// *******************************************sync data******************************************************************
+export async function syncData() {
+    // get local
+    let total = await chrome.storage.local.get(['total']);
+    let articles = await chrome.storage.local.get(['articles']);
+
+    if (total.total == undefined) {
+        total.total = 0;
+    }
+    if (articles.articles == undefined) {
+        articles.articles = { data: [] }
+    }
+
+    // get remote
+    let total_sync = await chrome.storage.sync.get(['total_sync']);
+    let articles_sync = await chrome.storage.sync.get(['articles_sync']);
+
+    if (total_sync.total_sync == undefined) {
+        total_sync.total_sync = 0;
+    }
+    if (articles_sync.articles_sync == undefined) {
+        articles_sync.articles_sync = { data: [] }
+    }
+
+    console.log("total " + total.total)
+    console.log('total sync ' + total_sync.total_sync)
+
+    // set total sync & local
+    if (total.total > total_sync.total_sync) {
+        await chrome.storage.sync.set({ total_sync: total.total});
+    } else {
+        await chrome.storage.local.set({ total: total_sync.total_sync });
+    }
+
+
+
+    // set data local & sync
+    // if(articles_sync.articles_sync.data.length > articles.articles.data.length){
+    //     await chrome.storage.local.set({articles : articles_sync.articles_sync});
+    // }else{
+    //     await chrome.storage.sync.set({articles_sync : articles.articles});
+    // }
+
+}
+
 
 // ******************************************dashboard part****************************************************************
 async function createChart() {
-    let data2 = [
-        { display_id: 2011, tweet_text: "fgqs ffhukqfn, hjzqbf ,qgdBC HJHFAQ", poster_user: "Rahim", poster_user_tag: "@rahim55", date_time_post: "2023-01-16T14:00:00.000Z", is_fake: 1 },
-        { display_id: 2010, tweet_text: "fgqs ffhukqfn, hjzqbf ,qgdBC HJHFAQ", poster_user: "Habbib", poster_user_tag: "@habib55", date_time_post: "2023-01-10T20:00:00.000Z", is_fake: 0 },
-        { display_id: 2012, tweet_text: "fgqs ffhukqfn, hjzqbf ,qgdBC HJHFAQ", poster_user: "hamza", poster_user_tag: "@hz55", date_time_post: "2023-01-14T18:00:00.000Z", is_fake: 0 },
-        { display_id: 2013, tweet_text: "fgqs ffhukqfn, hjzqbf ,qgdBC HJHFAQ", poster_user: "Netflix", poster_user_tag: "@netflix55", date_time_post: "2023-01-16T15:30:00.000Z", is_fake: 0 },
-        { display_id: 2014, tweet_text: "fgqs ffhukqfn, hjzqbf ,qgdBC HJHFAQ", poster_user: "Elon Musk", poster_user_tag: "@muskelon55", date_time_post: "2023-01-16T14:00:00.000Z", is_fake: 1 },
-        { display_id: 2015, tweet_text: "fgqs ffhukqfn, hjzqbf ,qgdBC HJHFAQ", poster_user: "Rahim", poster_user_tag: "@rahim55", date_time_post: "2023-01-15T22:50:00.000Z", is_fake: 0 },
-        { display_id: 2016, tweet_text: "fgqs ffhukqfn, hjzqbf ,qgdBC HJHFAQ", poster_user: "Rahim", poster_user_tag: "@rahim55", date_time_post: "2023-01-14T09:30:00.000Z", is_fake: 1 },
-        { display_id: 2017, tweet_text: "fgqs ffhukqfn, hjzqbf ,qgdBC HJHFAQ", poster_user: "LC news", poster_user_tag: "@lcnews", date_time_post: "2023-01-16T10:00:00.000Z", is_fake: 1 },
-        { display_id: 2018, tweet_text: "fgqs ffhukqfn, hjzqbf ,qgdBC HJHFAQ", poster_user: "New york times", poster_user_tag: "@NyTimes", date_time_post: "2023-01-12T16:00:00.000Z", is_fake: 0 },
-        { display_id: 2019, tweet_text: "fgqs ffhukqfn, hjzqbf ,qgdBC HJHFAQ", poster_user: "Habbib", poster_user_tag: "@habib55", date_time_post: "2023-01-15T23:30:00.000Z", is_fake: 0 },
-        { display_id: 2020, tweet_text: "fgqs ffhukqfn, hjzqbf ,qgdBC HJHFAQ", poster_user: "hamza", poster_user_tag: "@hz55", date_time_post: "2023-01-13T19:00:00.000Z", is_fake: 0 },
-        { display_id: 2021, tweet_text: "fgqs ffhukqfn, hjzqbf ,qgdBC HJHFAQ", poster_user: "Netflix", poster_user_tag: "@netflix55", date_time_post: "2023-01-15T14:00:00.000Z", is_fake: 0 },
-        { display_id: 2009, tweet_text: "fgqs ffhukqfn, hjzqbf ,qgdBC HJHFAQ", poster_user: "Netflix", poster_user_tag: "@netflix55", date_time_post: "2023-01-16T14:00:00.000Z", is_fake: 1 },
-        { display_id: 2008, tweet_text: "fgqs ffhukqfn, hjzqbf ,qgdBC HJHFAQ", poster_user: "Rahim", poster_user_tag: "@rahim55", date_time_post: "2023-01-11T13:20:00.000Z", is_fake: 1 },
-        { display_id: 2007, tweet_text: "fgqs ffhukqfn, hjzqbf ,qgdBC HJHFAQ", poster_user: "Rahim", poster_user_tag: "@rahim55", date_time_post: "2023-01-12T15:00:00.000Z", is_fake: 1 },
-    ];
+    let data = await getSavedTweetResult();
 
-    let queryObj = jslinq(data2);
+    let queryObj = jslinq(data);
 
     let rank_users = queryObj
-    .where(el=>el.is_fake == 1)
-    .groupBy((el) => el.poster_user)
-    .toList();
+        .where(el => el.is_fake == 1)
+        .groupBy((el) => el.poster_user)
+        .toList();
 
     let dist_data = queryObj
         .groupBy((el) => el.is_fake)
         .toList();
 
-    let labels ;
-    if(dist_data[0].elements[0].is_fake == 1){
-        labels = ["Fake" , "True"]
-    }else{
-        labels = ["True" , "Fake"]
+    let labels;
+    if (dist_data[0].elements[0].is_fake == 1) {
+        labels = ["Fake", "True"]
+    } else {
+        labels = ["True", "Fake"]
     }
 
     new Chart(
@@ -173,7 +205,7 @@ async function createChart() {
                 }
             },
             data: {
-                labels: rank_users.map(obj=>obj.key),
+                labels: rank_users.map(obj => obj.key),
                 datasets: [
                     {
                         label: "Count",
