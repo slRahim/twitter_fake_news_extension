@@ -30,13 +30,13 @@ function tweet_text(page) {
                     a = new Article(tweet_id,
                         articles[i].querySelector('[data-testid="User-Names"]').getElementsByTagName('time')[0].parentElement.getAttribute('href'),
                         document.getElementById(tweet_id).innerText,
-                        articles[i].querySelector('[data-testid="User-Names"]').innerTextsplit("\n")[0],
+                        articles[i].querySelector('[data-testid="User-Names"]').innerText.split("\n")[0],
                         articles[i].querySelector('[data-testid="User-Names"]').innerText.split("\n")[1],
                         articles[i].querySelector('[data-testid="User-Names"]').getElementsByTagName('time')[0].getAttribute('datetime'),
                         articles[i].querySelector('[data-testid="like"]').innerText,
                         articles[i].querySelector('[data-testid="reply"]').innerText,
                         articles[i].querySelector('[data-testid="retweet"]').innerText)
-                        console.log(a);
+                    
                     list_articles.push(a);
 
                     let button = document.createElement("Button");
@@ -79,13 +79,14 @@ function tweet_text(page) {
                         if (!list_ids.includes(tweet_id)) {
                             list_ids.push(tweet_id);
                             a = new Article(tweet_id,
-                                document.getElementById(tweet_id).firstChild.innerText,
-                                articles[i].querySelector('[data-testid="User-Names"]').innerText,
-                                articles[i].querySelector('[data-testid="User-Names"]').innerText.split("@")[1].split("·")[0],
+                                articles[i].querySelector('[data-testid="User-Names"]').getElementsByTagName('time')[0].parentElement.getAttribute('href'),
+                                document.getElementById(tweet_id).innerText,
+                                articles[i].querySelector('[data-testid="User-Names"]').innerText.split("\n")[0],
+                                articles[i].querySelector('[data-testid="User-Names"]').innerText.split("\n")[1],
                                 articles[i].querySelector('[data-testid="User-Names"]').getElementsByTagName('time')[0].getAttribute('datetime'),
-                                articles[i].querySelector('[data-testid="app-text-transition-container"]>span').innerText,
-                                articles[i].querySelector('[data-testid="reply"]>div').innerText,
-                                articles[i].querySelector('[data-testid="retweet"]>div').innerText)
+                                articles[i].querySelector('[data-testid="like"]').innerText,
+                                articles[i].querySelector('[data-testid="reply"]').innerText,
+                                articles[i].querySelector('[data-testid="retweet"]').innerText)
                             list_articles.push(a);
 
                             let button = document.createElement("Button");

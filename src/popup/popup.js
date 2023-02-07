@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     getTotalCo(function (result) {
         if (result.total == undefined) {
-            document.getElementById('id_total_detection').innerHTML = "0"
+            document.getElementById('id_total_detection').innerHTML = 0
         } else {
             document.getElementById('id_total_detection').innerHTML = result.total
         }
@@ -62,6 +62,9 @@ function getTotalCo(callback) {
 
 export async function updateTotal(value) {
     chrome.storage.local.get(["total"]).then((result) => {
+        if(result.total == undefined){
+            result.total = 0 ;
+        }
         let res = result.total + value;
         chrome.storage.local.set({ total: res }).then(() => {
             console.log("total Value is set to " + res);
@@ -91,13 +94,13 @@ export async function updateCurrentCo(value) {
 
 }
 
-/*async function getSavedTweetResult() {
+async function getSavedTweetResult() {
      let res = await chrome.storage.local.get(["articles"]);
      if(res.articles == undefined){
          return [] ;
      }
      return res.articles.data ;
- }*/
+ }
 
 export async function saveTweetResult(articles) {
     chrome.storage.local.get(["articles"]).then((result) => {
@@ -108,7 +111,7 @@ export async function saveTweetResult(articles) {
             result.articles.data.push(element)
         });
         chrome.storage.local.set({ articles: result.articles }).then(() => {
-            console.log("saved data" + result.articles.data.length);
+            console.log("saved data " + result.articles.data.length);
         });
 
     })
