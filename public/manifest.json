@@ -22,5 +22,11 @@
     "default_title": "Twitter Fake News",
     "default_popup": "popup.html"
   },
+  "icons": {
+    "16": "assets/icon-fake-news.png",
+    "32": "assets/icon-fake-news.png",
+    "48": "assets/icon-fake-news.png",
+    "128": "assets/icon-fake-news.png"
+  },
   "manifest_version": 3
 }

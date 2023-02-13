@@ -114,7 +114,7 @@ export async function saveTweetResult(articles) {
             result.articles.data.push(element)
         });
         chrome.storage.local.set({ articles: result.articles }).then(() => {
-            console.log("saved data " + result.articles.data.length);
+            // console.log("saved data " + result.articles.data.length);
         });
 
     })
