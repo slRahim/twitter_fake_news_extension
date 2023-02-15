@@ -149,7 +149,7 @@ export async function syncData() {
 
     // set total sync & local
     if (total.total > total_sync.total_sync) {
-        await chrome.storage.sync.set({ total_sync: total.total});
+        await chrome.storage.sync.set({ total_sync: total.total });
     } else {
         await chrome.storage.local.set({ total: total_sync.total_sync });
     }
@@ -175,7 +175,10 @@ async function createChart() {
     let rank_users = queryObj
         .where(el => el.is_fake == 1)
         .groupBy((el) => el.poster_user)
-        .toList();
+        .toList()
+        .sort((u1, u2) => (u1.count < u2.count) ? 1 : (u1.count > u2.count) ? -1 : 0)
+        .slice(0,5);
+
 
     let dist_data = queryObj
         .groupBy((el) => el.is_fake)
@@ -193,6 +196,7 @@ async function createChart() {
         {
             type: 'bar',
             options: {
+                indexAxis : "y",
                 plugins: {
                     title: {
                         display: true,
