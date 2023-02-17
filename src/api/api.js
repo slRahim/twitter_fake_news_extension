@@ -3,7 +3,7 @@ import { saveTweetResult, updateCurrentCo, updateTotal } from "../popup/popup";
 import '../popup/scss/style.scss'
 
 
-axios.defaults.baseURL = 'http://127.0.0.1:5000';
+axios.defaults.baseURL = 'https://sid-fake-news.online:5000';
 axios.defaults.timeout = 30000;
 
 export async function testTweetTimeLine(list_articles) {
