@@ -20,10 +20,10 @@ function tweet_text(page) {
     page.setTimeout(async function () {
         console.log("load is done")
         // part 1 before scroll
-        try {
-            const articles = document.getElementsByTagName("article");
-            for (let i = 0; i < articles.length; i++) {
-                if (articles[i].querySelector('[data-testid="tweetText"]') != undefined) {
+        const articles = document.getElementsByTagName("article");
+        for (let i = 0; i < articles.length; i++) {
+            if (articles[i].querySelector('[data-testid="tweetText"]') != undefined) {
+                try {
                     let tweet_id = articles[i].querySelector('[data-testid="tweetText"]').getAttribute("id")
                     let a;
                     if (!list_ids.includes(tweet_id)) {
@@ -58,27 +58,28 @@ function tweet_text(page) {
                         div_result.appendChild(button);
                         document.getElementById(tweet_id).appendChild(div_result)
                     }
+                } catch (error) {
+
                 }
 
-
             }
-            await testTweetTimeLine(list_articles);
-            last_index = list_articles.length - 1;
-        } catch (error) {
+
 
         }
+        await testTweetTimeLine(list_articles);
+        last_index = list_articles.length - 1;
 
 
         // part 2 scroll event
-        try {
-            page.onscroll = async function () {
-                if (page.oldScroll > page.scrollY) {
-                    // true up
-                    console.log("scroll up")
-                } else {
-                    //false down
-                    const articles = document.getElementsByTagName("article");
-                    for (let i = 0; i < articles.length; i++) {
+        page.onscroll = async function () {
+            if (page.oldScroll > page.scrollY) {
+                // true up
+                console.log("scroll up")
+            } else {
+                //false down
+                const articles = document.getElementsByTagName("article");
+                for (let i = 0; i < articles.length; i++) {
+                    try {
                         if (articles[i].querySelector('[data-testid="tweetText"]') != undefined) {
                             let tweet_id = articles[i].querySelector('[data-testid="tweetText"]').getAttribute("id")
                             let a;
@@ -114,18 +115,13 @@ function tweet_text(page) {
                                 document.getElementById(tweet_id).appendChild(div_result)
                             }
                         }
+                    } catch (error) { }
 
-                    }
-                    await testTweetTimeLine(list_articles.slice(last_index + 1));
-                    last_index = list_articles.length - 1;
 
                 }
                 page.oldScroll = page.scrollY;
             }
-        } catch (error) {
-
         }
-
 
     }, 7000);
 
@@ -136,8 +132,13 @@ function tweet_text(page) {
 function test_edition(page) {
     if (location.href == "https://twitter.com/home") {
         page.setTimeout(() => {
-            inputObserver();
-            createBtnTest()
+            try {
+
+                inputObserver();
+                createBtnTest()
+            } catch (error) {
+
+            }
         }, 5000);
     }
 }
@@ -175,6 +176,7 @@ function activeBtnTest() {
 }
 
 function createBtnTest() {
+
     let button = document.createElement("Button");
     button.innerHTML = "Test";
     button.setAttribute("id", "test_tweet")
