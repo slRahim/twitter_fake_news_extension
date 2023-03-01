@@ -1,9 +1,9 @@
 import axios from "axios";
 import { saveTweetResult, updateCurrentCo, updateTotal } from "../popup/popup";
 import '../popup/scss/style.scss'
+import * as bootstrap from "bootstrap/dist/js/bootstrap.bundle"
 
-
-axios.defaults.baseURL = 'https://sid-fake-news.online:5000';
+axios.defaults.baseURL = 'http://127.0.0.1:5000';
 axios.defaults.timeout = 30000;
 
 export async function testTweetTimeLine(list_articles) {
@@ -13,6 +13,7 @@ export async function testTweetTimeLine(list_articles) {
     for (let i = 0; i < response.data.articles.length; i++) {
       let id = "btn_fk_" + response.data.articles[i].display_id;
       document.getElementById(id).classList.remove("btn-outline-primary")
+
       if (response.data.articles[i].is_fake == 1) {
         document.getElementById(id).innerHTML = "X"
         document.getElementById(id).classList.add("btn-danger");
@@ -20,10 +21,14 @@ export async function testTweetTimeLine(list_articles) {
         document.getElementById(id).innerHTML = "✓"
         document.getElementById(id).classList.add("btn-success");
       }
-      // document.getElementById(id).disabled = false ;
-      document.getElementById(id).addEventListener('click', function () {
-        alert(response.data.articles[i].msg_res)
-      });
+
+      document.getElementById(id).setAttribute("data-bs-toggle", "popover")
+      document.getElementById(id).setAttribute("data-bs-placement", "right")
+      document.getElementById(id).setAttribute("data-bs-trigger", "hover focus")
+      document.getElementById(id).setAttribute("data-bs-title", "Confidences")
+      document.getElementById(id).setAttribute("data-bs-content", response.data.articles[i].msg_res)
+      new bootstrap.Popover(document.getElementById(id));
+
     }
     // save/update history of navigation in local storage 
     await saveTweetResult(response.data.articles)
@@ -49,9 +54,12 @@ export async function testInputTweet(article) {
       document.getElementById("test_tweet").classList.add('btn-success')
     }
 
-    document.getElementById("test_tweet").addEventListener('click', function () {
-      alert(response.data.articles.msg_res)
-    });
+    document.getElementById("test_tweet").setAttribute("data-bs-toggle", "popover")
+    document.getElementById("test_tweet").setAttribute("data-bs-placement", "right")
+    document.getElementById("test_tweet").setAttribute("data-bs-trigger", "hover focus")
+    document.getElementById("test_tweet").setAttribute("data-bs-title", "Confidences")
+    document.getElementById("test_tweet").setAttribute("data-bs-content", response.data.articles.msg_res)
+    new bootstrap.Popover(document.getElementById("test_tweet"));
 
   } catch (error) {
     // console.log(error)

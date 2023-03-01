@@ -46,12 +46,6 @@ function tweet_text(page) {
                         button.classList.add("btn-outline-primary");
                         button.setAttribute("id", "btn_fk_" + tweet_id)
                         button.setAttribute("type", "button")
-                        // button.addEventListener("click", function () {
-                        //     document.getElementById('btn_fk_' + tweet_id).disabled = true;
-                        //     testTweetTimeLine([a]);
-
-                        // }, false)
-
                         let div_result = document.createElement('div')
                         div_result.setAttribute("id", "div_fk_" + tweet_id)
                         div_result.style = "top:6%;right:-3%;position:fixed;--bs-btn-font-weight:950";
@@ -64,22 +58,20 @@ function tweet_text(page) {
 
             }
 
-
         }
         await testTweetTimeLine(list_articles);
         last_index = list_articles.length - 1;
 
-
         // part 2 scroll event
-        page.onscroll = async function () {
-            if (page.oldScroll > page.scrollY) {
-                // true up
-                console.log("scroll up")
-            } else {
-                //false down
-                const articles = document.getElementsByTagName("article");
-                for (let i = 0; i < articles.length; i++) {
-                    try {
+        try {
+            page.onscroll = async function () {
+                if (page.oldScroll > page.scrollY) {
+                    // true up
+                    console.log("scroll up")
+                } else {
+                    //false down
+                    const articles = document.getElementsByTagName("article");
+                    for (let i = 0; i < articles.length; i++) {
                         if (articles[i].querySelector('[data-testid="tweetText"]') != undefined) {
                             let tweet_id = articles[i].querySelector('[data-testid="tweetText"]').getAttribute("id")
                             let a;
@@ -102,12 +94,6 @@ function tweet_text(page) {
                                 button.classList.add("btn-outline-primary");
                                 button.setAttribute("id", "btn_fk_" + tweet_id)
                                 button.setAttribute("type", "button")
-                                // button.addEventListener("click", function () {
-                                //     document.getElementById('btn_fk_' + tweet_id).disabled = true;
-                                //     testTweetTimeLine([a]);
-
-                                // }, false)
-
                                 let div_result = document.createElement('div')
                                 div_result.setAttribute("id", "div_fk_" + tweet_id)
                                 div_result.style = "top:6%;right:-3%;position:fixed;--bs-btn-font-weight:950";
@@ -115,16 +101,18 @@ function tweet_text(page) {
                                 document.getElementById(tweet_id).appendChild(div_result)
                             }
                         }
-                    } catch (error) { }
 
+                    }
+                    await testTweetTimeLine(list_articles.slice(last_index + 1));
+                    last_index = list_articles.length - 1;
 
                 }
                 page.oldScroll = page.scrollY;
             }
+        } catch (error) {
         }
 
     }, 7000);
-
 
 }
 
@@ -133,28 +121,14 @@ function test_edition(page) {
     if (location.href == "https://twitter.com/home") {
         page.setTimeout(() => {
             try {
-
-                inputObserver();
                 createBtnTest()
+                inputObserver();
             } catch (error) {
 
             }
         }, 5000);
     }
 }
-
-// function createLabelResult() {
-//     let label = document.createElement("span");
-//     label.innerHTML = "Result";
-//     label.setAttribute("id", "Result_Tweet")
-//     label.classList.add('label_result')
-//     let btn = document.getElementById('Test_News');
-//     document.querySelector('[role="progressbar"]').parentElement.insertBefore(label, btn);
-
-
-//     //var inputTxt = document.querySelector('[data-text="true"]');
-//     //inputTxt.innerHTML != "" ? activeBtnTest() : inactiveBtnTest();
-// }
 
 async function btn_test_edition() {
     let text = document.querySelector('[data-text="true"]').innerHTML;
@@ -176,7 +150,6 @@ function activeBtnTest() {
 }
 
 function createBtnTest() {
-
     let button = document.createElement("Button");
     button.innerHTML = "Test";
     button.setAttribute("id", "test_tweet")
@@ -191,15 +164,22 @@ function createBtnTest() {
 }
 
 function inputObserver() {
+    let oldtxt = ''
     let inputTxt = document.querySelector('[data-text="true"]').parentElement;
-    let observer = new MutationObserver(function (mutations) {
-        mutations.forEach(function (mutation) {
-            inputTxt.children[0].innerHTML != "" ? activeBtnTest() : inactiveBtnTest();
-        });
-    });
-
-    let config = { attributes: true, childList: true, characterData: true };
-    observer.observe(inputTxt, config);
+    let el = document.querySelector('[data-testid="tweetButtonInline"]');
+    setInterval(() => {
+        if (el.getAttribute("aria-disabled") == "true") {
+            inactiveBtnTest()
+        } else {
+            if(inputTxt.firstChild.innerHTML != oldtxt){
+                document.getElementById("test_tweet").remove()
+                createBtnTest()
+                oldtxt = inputTxt.firstChild.innerHTML ;
+            }else{
+                activeBtnTest()
+            }
+        }
+    }, 500)
 }
 
 

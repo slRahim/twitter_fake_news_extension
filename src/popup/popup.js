@@ -7,10 +7,10 @@ import Chart from 'chart.js/auto'
 import jslinq from 'jslinq'
 
 document.addEventListener('DOMContentLoaded', function () {
-
     document.getElementById("sync_btn").addEventListener('click', async () => {
         await syncData();
     })
+
     getTotalCo(function (result) {
         if (result.total == undefined) {
             document.getElementById('id_total_detection').innerHTML = 0
@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
 
-    // current
     getDetectedCo(function (result) {
         if (result.detected == undefined) {
             document.getElementById('id_co_detection').innerHTML = 0
@@ -154,8 +153,6 @@ export async function syncData() {
         await chrome.storage.local.set({ total: total_sync.total_sync });
     }
 
-
-
     // set data local & sync
     // if(articles_sync.articles_sync.data.length > articles.articles.data.length){
     //     await chrome.storage.local.set({articles : articles_sync.articles_sync});
@@ -169,9 +166,8 @@ export async function syncData() {
 // ******************************************dashboard part****************************************************************
 async function createChart() {
     let data = await getSavedTweetResult();
-
     let queryObj = jslinq(data);
-
+    
     let rank_users = queryObj
         .where(el => el.is_fake == 1)
         .groupBy((el) => el.poster_user)
