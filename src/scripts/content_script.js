@@ -8,15 +8,12 @@ window.addEventListener('load', function () {
     test_edition(this.window);
 
 })
-
 // ******************************************part I*****************************************************************
 function tweet_text(page) {
     let list_ids = []
     let list_articles = []
     let last_index = -1;
-
     console.log("Extension is loading...")
-
     page.setTimeout(async function () {
         console.log("load is done")
         // part 1 before scroll
@@ -37,9 +34,7 @@ function tweet_text(page) {
                             articles[i].querySelector('[data-testid="like"]').innerText,
                             articles[i].querySelector('[data-testid="reply"]').innerText,
                             articles[i].querySelector('[data-testid="retweet"]').innerText)
-
                         list_articles.push(a);
-
                         let button = document.createElement("Button");
                         button.innerHTML = "?";
                         button.classList.add("btn");
@@ -52,22 +47,17 @@ function tweet_text(page) {
                         div_result.appendChild(button);
                         document.getElementById(tweet_id).appendChild(div_result)
                     }
-                } catch (error) {
-
-                }
-
+                } catch (error) { }
             }
-
         }
         await testTweetTimeLine(list_articles);
         last_index = list_articles.length - 1;
-
         // part 2 scroll event
         try {
             page.onscroll = async function () {
                 if (page.oldScroll > page.scrollY) {
                     // true up
-                    console.log("scroll up")
+                    // console.log("scroll up")
                 } else {
                     //false down
                     const articles = document.getElementsByTagName("article");
@@ -101,21 +91,16 @@ function tweet_text(page) {
                                 document.getElementById(tweet_id).appendChild(div_result)
                             }
                         }
-
                     }
                     await testTweetTimeLine(list_articles.slice(last_index + 1));
                     last_index = list_articles.length - 1;
-
                 }
                 page.oldScroll = page.scrollY;
             }
-        } catch (error) {
-        }
-
+        } catch (error) { }
     }, 7000);
 
 }
-
 // ******************************part II*******************************************************************
 function test_edition(page) {
     if (location.href == "https://twitter.com/home") {
@@ -123,13 +108,10 @@ function test_edition(page) {
             try {
                 createBtnTest()
                 inputObserver();
-            } catch (error) {
-
-            }
+            } catch (error) {}
         }, 5000);
     }
 }
-
 async function btn_test_edition() {
     let text = document.querySelector('[data-text="true"]').innerHTML;
     console.log(text)
@@ -138,17 +120,14 @@ async function btn_test_edition() {
         await testInputTweet(article)
     }
 }
-
 function inactiveBtnTest() {
     let btn = document.getElementById("test_tweet");
     btn.disabled = true;
 }
-
 function activeBtnTest() {
     let btn = document.getElementById("test_tweet");
     btn.disabled = false;
 }
-
 function createBtnTest() {
     let button = document.createElement("Button");
     button.innerHTML = "Test";
@@ -162,7 +141,6 @@ function createBtnTest() {
     let inputTxt = document.querySelector('[data-text="true"]');
     inputTxt.innerHTML != "" ? activeBtnTest() : inactiveBtnTest();
 }
-
 function inputObserver() {
     let oldtxt = ''
     let inputTxt = document.querySelector('[data-text="true"]').parentElement;

@@ -1,4 +1,3 @@
-
 export default class Article {
     display_id;
     tweet_id;

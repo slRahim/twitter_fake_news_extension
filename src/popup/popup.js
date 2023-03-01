@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById("sync_btn").addEventListener('click', async () => {
         await syncData();
     })
-
     getTotalCo(function (result) {
         if (result.total == undefined) {
             document.getElementById('id_total_detection').innerHTML = 0
@@ -19,7 +18,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
     });
-
     getDetectedCo(function (result) {
         if (result.detected == undefined) {
             document.getElementById('id_co_detection').innerHTML = 0
@@ -27,7 +25,6 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('id_co_detection').innerHTML = result.detected
         }
     });
-
     getCurrentTabUrl(function (url) {
         document.getElementById("current_url_id").innerHTML = url;
         if (url !== "twitter.com") {
@@ -39,7 +36,6 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('current_url_desc_id').innerHTML = "Your extension is enabled"
         }
     });
-
     createChart();
 });
 
@@ -48,7 +44,6 @@ function getCurrentTabUrl(callback) {
         active: true,
         currentWindow: true
     };
-
     chrome.tabs.query(queryInfo, function (tabs) {
         var tab = tabs[0];
         var url = tab.url.split('/')[2];
@@ -131,7 +126,6 @@ export async function syncData() {
     if (articles.articles == undefined) {
         articles.articles = { data: [] }
     }
-
     // get remote
     let total_sync = await chrome.storage.sync.get(['total_sync']);
     let articles_sync = await chrome.storage.sync.get(['articles_sync']);
@@ -142,10 +136,6 @@ export async function syncData() {
     if (articles_sync.articles_sync == undefined) {
         articles_sync.articles_sync = { data: [] }
     }
-
-    console.log("total " + total.total)
-    console.log('total sync ' + total_sync.total_sync)
-
     // set total sync & local
     if (total.total > total_sync.total_sync) {
         await chrome.storage.sync.set({ total_sync: total.total });
@@ -162,20 +152,16 @@ export async function syncData() {
 
 }
 
-
 // ******************************************dashboard part****************************************************************
 async function createChart() {
     let data = await getSavedTweetResult();
     let queryObj = jslinq(data);
-    
     let rank_users = queryObj
         .where(el => el.is_fake == 1)
         .groupBy((el) => el.poster_user)
         .toList()
         .sort((u1, u2) => (u1.count < u2.count) ? 1 : (u1.count > u2.count) ? -1 : 0)
         .slice(0,5);
-
-
     let dist_data = queryObj
         .groupBy((el) => el.is_fake)
         .toList();
@@ -186,7 +172,6 @@ async function createChart() {
     } else {
         labels = ["True", "Fake"]
     }
-
     new Chart(
         document.getElementById('rank_user_id'),
         {
@@ -215,7 +200,6 @@ async function createChart() {
             }
         }
     );
-
     new Chart(
         document.getElementById('dist_data_id'),
         {
@@ -243,7 +227,4 @@ async function createChart() {
             }
         }
     );
-
-
-
 }
