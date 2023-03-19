@@ -26,14 +26,14 @@ function tweet_text(page) {
                     if (!list_ids.includes(tweet_id)) {
                         list_ids.push(tweet_id);
                         a = new Article(tweet_id,
-                            articles[i].querySelector('[data-testid="User-Names"]').getElementsByTagName('time')[0].parentElement.getAttribute('href'),
+                            articles[i].querySelector('[data-testid="User-Name"]').getElementsByTagName('time')[0].parentElement.getAttribute('href'),
                             document.getElementById(tweet_id).innerText,
-                            articles[i].querySelector('[data-testid="User-Names"]').innerText.split("\n")[0],
-                            articles[i].querySelector('[data-testid="User-Names"]').innerText.split("\n")[1],
-                            articles[i].querySelector('[data-testid="User-Names"]').getElementsByTagName('time')[0].getAttribute('datetime'),
+                            articles[i].querySelector('[data-testid="User-Name"]').innerText.split("\n")[0],
+                            articles[i].querySelector('[data-testid="User-Name"]').innerText.split("\n")[1],
+                            articles[i].querySelector('[data-testid="User-Name"]').getElementsByTagName('time')[0].getAttribute('datetime'),
                             articles[i].querySelector('[data-testid="like"]').innerText,
                             articles[i].querySelector('[data-testid="reply"]').innerText,
-                            articles[i].querySelector('[data-testid="retweet"]').innerText)
+                            articles[i].querySelector('[data-testid="retweet"]').innerText);
                         list_articles.push(a);
                         let button = document.createElement("Button");
                         button.innerHTML = "?";
@@ -68,11 +68,11 @@ function tweet_text(page) {
                             if (!list_ids.includes(tweet_id)) {
                                 list_ids.push(tweet_id);
                                 a = new Article(tweet_id,
-                                    articles[i].querySelector('[data-testid="User-Names"]').getElementsByTagName('time')[0].parentElement.getAttribute('href'),
+                                    articles[i].querySelector('[data-testid="User-Name"]').getElementsByTagName('time')[0].parentElement.getAttribute('href'),
                                     document.getElementById(tweet_id).innerText,
-                                    articles[i].querySelector('[data-testid="User-Names"]').innerText.split("\n")[0],
-                                    articles[i].querySelector('[data-testid="User-Names"]').innerText.split("\n")[1],
-                                    articles[i].querySelector('[data-testid="User-Names"]').getElementsByTagName('time')[0].getAttribute('datetime'),
+                                    articles[i].querySelector('[data-testid="User-Name"]').innerText.split("\n")[0],
+                                    articles[i].querySelector('[data-testid="User-Name"]').innerText.split("\n")[1],
+                                    articles[i].querySelector('[data-testid="User-Name"]').getElementsByTagName('time')[0].getAttribute('datetime'),
                                     articles[i].querySelector('[data-testid="like"]').innerText,
                                     articles[i].querySelector('[data-testid="reply"]').innerText,
                                     articles[i].querySelector('[data-testid="retweet"]').innerText)
@@ -108,7 +108,7 @@ function test_edition(page) {
             try {
                 createBtnTest()
                 inputObserver();
-            } catch (error) {}
+            } catch (error) { }
         }, 5000);
     }
 }
@@ -149,11 +149,11 @@ function inputObserver() {
         if (el.getAttribute("aria-disabled") == "true") {
             inactiveBtnTest()
         } else {
-            if(inputTxt.firstChild.innerHTML != oldtxt){
+            if (inputTxt.firstChild.innerHTML != oldtxt) {
                 document.getElementById("test_tweet").remove()
                 createBtnTest()
-                oldtxt = inputTxt.firstChild.innerHTML ;
-            }else{
+                oldtxt = inputTxt.firstChild.innerHTML;
+            } else {
                 activeBtnTest()
             }
         }
