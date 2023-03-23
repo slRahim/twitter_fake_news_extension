@@ -1,0 +1,68 @@
+<link rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+<script type="module" src="./popup.bundel.js"></script>
+<div class="cont">
+  <nav class="navbar bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bolder" href="#">
+        <img src="../assets/icon-fake-news.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+        Twitter Fake News
+      </a>
+      <div class="d-flex" id="sync_btn" style="cursor: pointer;">
+        <span class="material-symbols-outlined">
+          sync
+        </span>
+      </div>
+    </div>
+  </nav>
+  <div class="p-3">
+    <ul class="nav nav-pills mb-3" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home"
+          type="button" role="tab" aria-controls="pills-home" aria-selected="true">
+          <span class="material-symbols-outlined">
+            my_location
+            </span>
+        </button>
+      </li>
+      <li class="nav-item" role="presentation" >
+        <button class="nav-link" id="pills-dashboard-tab" data-bs-toggle="pill" data-bs-target="#pills-dashboard"
+          type="button" role="tab" aria-controls="pills-dashboard" aria-selected="false">
+          <span class="material-symbols-outlined">
+            dashboard
+            </span>
+        </button>
+      </li>
+    </ul>
+    <div class="tab-content" id="pills-tabContent">
+      <!-- tab 1 home -->
+      <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"
+        tabindex="0">
+        <br>
+        <div class="row align-items-center">
+          <p class="text-center fw-bold fs-3">Detected: <span id="id_co_detection">0</span></p>
+          <p class="text-center fs-6">Total: <span id="id_total_detection">0</span></p>
+          <div class="d-flex justify-content-center">
+            <p id="emoji_status_id" style="font-size:100px">&#128564;</p>
+          </div>
+        </div>
+        <div class="row align-items-center">
+          <p id="current_url_id" class="text-center fw-bolder fs-5">url</p>
+          <p id="current_url_desc_id" class="text-center fs-6">Protection is enabled</p>
+        </div>
+      
+      </div>
+      <!-- tab 2 dashboard -->
+      <div class="tab-pane fade" id="pills-dashboard" role="tabpanel" aria-labelledby="pills-dashboard-tab" tabindex="0">
+        <div class="row align-items-center">
+          <div id="chart_ui">
+            <canvas id="rank_user_id" style="height: 200;"></canvas>
+            <hr>
+            <canvas id="dist_data_id"></canvas>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

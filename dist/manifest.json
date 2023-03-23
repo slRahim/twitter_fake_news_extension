@@ -1,0 +1,32 @@
+{
+  "name": "Twitter fake news",
+  "version": "0.1.0",
+  "description": "Detect fake news in twitter platform",
+  "permissions": ["tabs", "storage" ,"unlimitedStorage"],
+  "host_permissions": ["https://*/*", "http://*/*"],
+  "background": {
+    "service_worker": "background.bundel.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.twitter.com/home"],
+      "js": ["content.bundel.js"]
+    }
+  ],
+  "action": {
+    "default_icon": {
+      "16": "assets/icon-fake-news.png",
+      "24": "assets/icon-fake-news.png",
+      "32": "assets/icon-fake-news.png"
+    },
+    "default_title": "Twitter Fake News",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "assets/icon-fake-news.png",
+    "32": "assets/icon-fake-news.png",
+    "48": "assets/icon-fake-news.png",
+    "128": "assets/icon-fake-news.png"
+  },
+  "manifest_version": 3
+}
